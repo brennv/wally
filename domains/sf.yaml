@@ -1,0 +1,7 @@
+apiType: soda
+name: DataSF
+locale: San Francisco
+domain: data.sfgov.org
+dbPath: ./data/data.sfgov.org.db
+slackUrl: "https://hooks.slack.com/services/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"
+link: ""
