@@ -1,9 +1,0 @@
-domain: data.sfgov.org
-name: DataSF
-locale: San Francisco
-api:
-  kind: soda
-  version: v1
-  token: ""
-webhooks:
-  slack: "https://hooks.slack.com/services/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"
