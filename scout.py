@@ -27,7 +27,7 @@ class Scout():
                 if slack_note:
                     response = slack(self, slack_note)
                     if response == 'ok':
-                        set_db(self, df2)
+                        set_db(self, df2)  # TODO cue messages
                 if twitter_note:
                     tweet(self, twitter_note)
                     print('tweet')

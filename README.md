@@ -10,11 +10,6 @@ A pre-alpha tool for diff'ing metadata from open data APIs and sending notificat
 Data-scout is integrated with:
 - Slack using [incoming webhooks](https://api.slack.com/incoming-webhooks)
 
-Planned integrations:
-- SMS
-- Twitter
-- email
-
 ## Getting started
 
     git clone ..
@@ -23,9 +18,9 @@ Planned integrations:
     pip install -r requirements
     python run.py
 
-### Configuring
+### Configuring webhook actions
 
-Configs for domains to be checked are stored here and represented as separate yaml files.
+Webhooks for each api to be checked are represented as separate yaml files. Currently, only soda-based apis are supported.
 
 Example yaml file for data.sfgov.org
 
@@ -35,9 +30,10 @@ Example yaml file for data.sfgov.org
     api:
       kind: soda
       version: v1
-      token: ""    <-- your domain api token
+      token: ""
     webhooks:
-      slack: ""    <-- your Slack webhook url
+      slack:  
+        url: ""
 
 ### Development
 
