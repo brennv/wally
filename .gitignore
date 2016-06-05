@@ -64,3 +64,6 @@ target/
 
 # gists
 gists/
+
+# data
+data.db
