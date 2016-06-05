@@ -1,9 +1,0 @@
-domain: data.sfgov.org
-name: DataSF
-apiFamily: soda
-apiVersion: v1
-apiToken: ""
-apiDocs: "https://data.sfgov.org/developers"
-locale: San Francisco
-db: ./data/data.sfgov.org.db
-slackUrl: ""

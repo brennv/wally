@@ -8,15 +8,18 @@ import random
 import json
 
 
+# class Soda():
+'''Methods for utlizing soda apis.'''
+
 def get_json(self, endpoint):
     '''Ping endpoint and return json.'''
     url = 'https://' + self.domain + endpoint
-    # if self.apiToken:  # TODO integrate tokens
+    # if self.api.token:  # TODO integrate tokens
     #    url = url + '&$$app_token=' + self.domain_token
     try:
         json = requests.get(url).json()
     except MaxRetryError as e:
-        print('MaxRetryError')
+        print('error', e)
         time.sleep(4000)
     time.sleep(random.uniform(1, 3))
     return json
@@ -44,12 +47,12 @@ def get_metadata(self, uid):
     columnCount = len(columns)
     try:
         blurb = views['description']
-    except KeyError:
+    except KeyError as e:
         blurb = ''
     try:
         resource = get_json(self, '/resource/' + uid + '.json?$select=count(*)')
         rowCount = int(resource[0]['count'])
-    except KeyError:
+    except KeyError as e:
         rowCount = 0
     return name, updated, rowCount, columnCount, columns, blurb
 
@@ -80,19 +83,19 @@ def get_df(self):
     return df
 
 def set_db(self, df):
-    '''Save dataframe as sqlite table.'''
-    print('Setting db...', self.db)
-    engine = create_engine('sqlite:///' + self.db)
+    '''Save dataframe as database table.'''
+    print('Setting db...', self.db_uri, self.db_table)
+    engine = create_engine(self.db_uri)
     with engine.connect() as conn, conn.begin():
-        df.to_sql(self.domain, conn, if_exists='replace')
+        df.to_sql(self.db_table, conn, if_exists='replace')
     return True
 
 def get_db(self):
     '''Read sqlite table into dataframe.'''
-    print('Getting db...', self.db)
-    engine = create_engine('sqlite:///' + self.db)
+    print('Getting db...', self.db_uri, self.db_table)
+    engine = create_engine(self.db_uri)
     with engine.connect() as conn, conn.begin():
-        df1 = pd.read_sql_table(self.domain, conn)
+        df1 = pd.read_sql_table(self.db_table, conn)
         df1 = df1.set_index('uid').sort_index()
     return df1
 

@@ -6,10 +6,10 @@ Example yaml file for data.sfgov.org
 
     domain: data.sfgov.org
     name: DataSF
-    apiFamily: soda
-    apiVersion: v1
-    apiToken: ""    <-- your api token
-    apiDocs: "https://data.sfgov.org/developers"
     locale: San Francisco
-    db: ./data/data.sfgov.org.db
-    slackUrl: ""    <-- your incoming Slack webhook
+    api:
+      kind: soda
+      version: v1
+      token: ""    <-- your domain api token
+    webhooks:
+      slack: ""    <-- your Slack webhook url
