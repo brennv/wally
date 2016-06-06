@@ -1,10 +1,8 @@
-from config import api_dir
 import os
 import yaml
-# from apscheduler.scheduler import Scheduler
 
 
-def get_specs(rel_dir):
+def get_docs(rel_dir):
     '''Load yaml files for each Scout instance.'''
     # TODO validation
     print('Getting domain configs...', rel_dir)
@@ -19,4 +17,4 @@ def get_specs(rel_dir):
                     docs.append(doc)
     return docs
 
-apis = get_specs(api_dir)
+docs = get_docs('./apis')

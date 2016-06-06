@@ -1,12 +1,12 @@
 import slackweb
 
 
-def slack(self, note):
+def slack(url, note):
     '''Send message to slack channel.'''
     response = 'null'
     if note != []:
         print('Slacking update...')
-        post = slackweb.Slack(url=self.webhooks.slack)
+        post = slackweb.Slack(url=url)
         response = post.notify(text=note)
     return response
 
