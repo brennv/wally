@@ -1,4 +1,4 @@
-from .diff import *
+from diff.diff import *
 from integrations import slack
 import os
 
