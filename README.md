@@ -25,12 +25,7 @@ Webhooks for each api are represented as separate yaml files in **apis/**.
     api:
       kind: soda
       version: v1
-      token: "your-token"
+      token: "your-api-token"
     webhooks:
       - kind: slack
         url: "your-slack-webhook-url"
-
-### Development
-
-    make install
-    make test
