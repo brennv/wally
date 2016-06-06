@@ -6,4 +6,5 @@ api:
   version: v1
   token: ""
 webhooks:
-  slack: ""
+  - kind: slack
+    url: ""

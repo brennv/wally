@@ -1,28 +1,23 @@
 # data-scout
 
 A pre-alpha tool for diff'ing metadata from open data APIs and sending notifications:
-- new dataset added
+- new datasets added
 - dataset updates (row counts)
 - datasets removed
 
 ## Integrations
 
-Data-scout is integrated with:
 - Slack using [incoming webhooks](https://api.slack.com/incoming-webhooks)
 
 ## Getting started
 
-    git clone ..
-    cd data-scout
-    python3 -m .env
-    pip install -r requirements
-    python run.py
+    make install
+    # add api tokens an webhook urls to apis/
+    make run
 
-### Configuring webhook actions
+### Configuring webhooks
 
-Webhooks for each api to be checked are represented as separate yaml files. Currently, only soda-based apis are supported.
-
-Example yaml file for data.sfgov.org
+Webhooks for each api are represented as separate yaml files in **apis/**.
 
     domain: data.sfgov.org
     name: DataSF
@@ -30,11 +25,12 @@ Example yaml file for data.sfgov.org
     api:
       kind: soda
       version: v1
-      token: ""
+      token: "your-token"
     webhooks:
-      slack:  
-        url: ""
+      - kind: slack
+        url: "your-slack-webhook-url"
 
 ### Development
 
-For dev/testing, domain metadata is housed in the data folder with sqlite
+    make install
+    make test

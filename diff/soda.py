@@ -19,13 +19,16 @@ class Soda():
             df1, df2, is_diff = check_diff(self.db_uri, self.db_table, self.domain)
             if is_diff:
                 slack_note, twitter_note = get_notes(self.domain, df1, df2)
-                if slack_note:
-                    response = slack(self.webhooks.slack.url, slack_note)
-                    if response == 'ok':
-                        set_db(self.db_uri, self.db_table, df2)  # TODO cue messages
-                # if twitter_note:
-                #     tweet(webhooks.twitter.url, twitter_note)
-                #     print('tweet')
+                response = ''
+                for hook in self.webhooks:
+                    if hook['kind'] == 'slack' and len(slack_note) > 10:  # not None
+                        url = hook['url']
+                        response = slack(url, slack_note)
+                    # if hook['kind'] == 'twitter' and len(twitter_note) > 10:  # not None
+                    #     url = hook['url']
+                    #     response = slack(url, twitter_note)
+                if response == 'ok':
+                    set_db(self.db_uri, self.db_table, df2)  # TODO cue messages
         else:
             df1 = get_df(self.domain)
             set_db(self.db_uri, self.db_table, df1)

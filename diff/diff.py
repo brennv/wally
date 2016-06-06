@@ -7,40 +7,44 @@ import random
 import json
 
 
+# catalog_url = 'https://' + domain + '/api/catalog/v1?only=datasets'  # + '&offset=' + str(offset)
+# metadata_url = 'https://' + domain + '/api/views/' + uid + '.json'
+# rowCount_url = 'https://' + domain + '/resource/' + uid + '.json?$select=count(*)'
+
 def get_json(url):
     '''Ping endpoint and return json.'''
-    print(url)
+    # print(url)
     try:
         json = requests.get(url).json()
-    except MaxRetryError as e:
+    except BaseException as e:  # MaxRetryError
         print('error', e)
-        time.sleep(4000)
+        # time.sleep(4000)
     time.sleep(random.uniform(1, 3))
-    print(json)
+    # print(json)
     return json
 
 def get_keys(domain):
     '''Get the ids of all the datasets in the domain catalog.'''
-    url = 'https://' + domain + '/api/catalog/v1?only=datasets'
+    catalog_url = domain + '/api/catalog/v1?only=datasets'
     # if api.token:  # TODO integrate tokens
     #    url = url + '&$$app_token=' + domain_token
-    catalog = get_json(url)
+    catalog = get_json('https://' + catalog_url)
     resultCount = catalog['resultSetSize']
     uids = [x['resource']['id'] for x in catalog['results']]
     pages = resultCount // 100 + (resultCount % 100 > 0)
     offset = 0
     for page in range(1, pages):
         offset += 100
-        url = 'https://' + domain + '/api/catalog/v1?only=datasets&offset=' + str(offset)
-        catalog = get_json(url)
+        url = catalog_url + '&offset=' + str(offset)
+        catalog = get_json('https://' + url)
         pageUids = [x['resource']['id'] for x in catalog['results']]
         uids = uids + pageUids
     return uids
 
 def get_metadata(domain, uid):
     '''Get metdata for a given dataset unique id.'''
-    url = 'https://' + domain + '/api/views/' + uid + '.json'
-    views = get_json(url)
+    url = domain + '/api/views/' + uid + '.json'
+    views = get_json('https://' + url)
     name = views['name']
     updated = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(views['rowsUpdatedAt']))
     columns = [x['name'] for x in views['columns']]
@@ -50,8 +54,8 @@ def get_metadata(domain, uid):
     except KeyError as e:
         blurb = ''
     try:
-        url = 'https://' + domain + '/resource/' + uid + '.json?$select=count(*)'
-        resource = get_json(url)
+        url = domain + '/resource/' + uid + '.json?$select=count(*)'
+        resource = get_json('https://' + url)
         rowCount = int(resource[0]['count'])
     except KeyError as e:
         rowCount = 0
