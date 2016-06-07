@@ -12,7 +12,7 @@ A pre-alpha tool for diff'ing metadata from open data APIs and sending notificat
 ## Getting started
 
     make install
-    # add api tokens an webhook urls to apis/
+    # add api tokens and webhook urls to apis/
     make run
 
 ### Configuring webhooks
