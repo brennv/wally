@@ -1,8 +1,6 @@
 # wally
 
-A pre-alpha tool to diff api results as well as:
-- serve diff results via an api
-- integrate notifications
+Diff api results over time, serve diff results via an api and integrate notifications.
 
 ![](http://s31.postimg.org/shsmoxv0r/wally.png)
 
