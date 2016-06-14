@@ -15,7 +15,7 @@ def get_json(self, url):
     time.sleep(sleep_time)
     return json
 
-def diff(self):
+def theatrics(self):
     db_uri = self.db_uri
     domain = self.domain
     db = dataset.connect(db_uri)

@@ -1,6 +1,6 @@
 # from spencer.diff import *
 # from spencer.integrations import slack
-from wally.utils import get_json, diff
+from wally.utils import get_json, theatrics
 import dataset
 import os
 
@@ -16,7 +16,7 @@ class Soda():
         self.webhooks = doc['webhooks']
         self.db_table = doc['domain']
         self.db_uri = db_uri
-        self.requestsPerHour = 1000
+        self.hourlyLimit = doc['api']['hourlyLimit']
 
     def request_ids(self):
         '''Get the ids of all the datasets in the domain catalog.'''
@@ -71,5 +71,5 @@ class Soda():
         return True
 
     def run(self):
-        diff(self)
+        theatrics(self)
         return True

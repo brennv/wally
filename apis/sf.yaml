@@ -5,6 +5,7 @@ api:
   kind: soda
   version: v1
   token: ""
+  hourlyLimit: 1000
 webhooks:
   - kind: slack
     url: ""

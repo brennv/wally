@@ -16,9 +16,9 @@ A pre-alpha tool to diff api results as well as:
     # add api tokens and webhook urls to apis/
     make run
 
-### Configuring webhooks
+### Configuration
 
-Webhooks for each api are represented as separate yaml files in **apis/**.
+APIs to be diff'd are represented as separate yaml files in **apis/**.
 
     domain: data.sfgov.org
     name: DataSF
@@ -27,6 +27,7 @@ Webhooks for each api are represented as separate yaml files in **apis/**.
       kind: soda
       version: v1
       token: "your-api-token"
+      hourlyLimit: 1000
     webhooks:
       - kind: slack
         url: "your-slack-webhook-url"
