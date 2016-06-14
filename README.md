@@ -1,10 +1,10 @@
 # wally
 
-![](http://s31.postimg.org/shsmoxv0r/wally.png)
-
 A pre-alpha tool to diff api results as well as:
 - serve diff results via an api
 - integrate notifications
+
+![](http://s31.postimg.org/shsmoxv0r/wally.png)
 
 ## Integrations
 
