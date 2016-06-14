@@ -1,65 +1,7 @@
 from sqlalchemy import create_engine
 from tqdm import tqdm
 import pandas as pd
-import requests
-import time
-import random
-import json
 
-
-# catalog_url = 'https://' + domain + '/api/catalog/v1?only=datasets'  # + '&offset=' + str(offset)
-# metadata_url = 'https://' + domain + '/api/views/' + uid + '.json'
-# rowCount_url = 'https://' + domain + '/resource/' + uid + '.json?$select=count(*)'
-
-def get_json(url):
-    '''Ping endpoint and return json.'''
-    # print(url)
-    try:
-        json = requests.get(url).json()
-    except BaseException as e:  # MaxRetryError
-        print('error', e)
-        # time.sleep(4000)
-    time.sleep(random.uniform(1, 3))
-    # print(json)
-    return json
-
-def get_keys(domain):
-    '''Get the ids of all the datasets in the domain catalog.'''
-    catalog_url = domain + '/api/catalog/v1?only=datasets'
-    # if api.token:  # TODO integrate tokens
-    #    url = url + '&$$app_token=' + domain_token
-    catalog = get_json('https://' + catalog_url)
-    resultCount = catalog['resultSetSize']
-    uids = [x['resource']['id'] for x in catalog['results']]
-    pages = resultCount // 100 + (resultCount % 100 > 0)
-    offset = 0
-    for page in range(1, pages):
-        offset += 100
-        url = catalog_url + '&offset=' + str(offset)
-        catalog = get_json('https://' + url)
-        pageUids = [x['resource']['id'] for x in catalog['results']]
-        uids = uids + pageUids
-    return uids
-
-def get_metadata(domain, uid):
-    '''Get metdata for a given dataset unique id.'''
-    url = domain + '/api/views/' + uid + '.json'
-    views = get_json('https://' + url)
-    name = views['name']
-    updated = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(views['rowsUpdatedAt']))
-    columns = [x['name'] for x in views['columns']]
-    columnCount = len(columns)
-    try:
-        blurb = views['description']
-    except KeyError as e:
-        blurb = ''
-    try:
-        url = domain + '/resource/' + uid + '.json?$select=count(*)'
-        resource = get_json('https://' + url)
-        rowCount = int(resource[0]['count'])
-    except KeyError as e:
-        rowCount = 0
-    return name, updated, rowCount, columnCount, columns, blurb
 
 def get_df(domain):
     '''Combine dataset metadatas into a dataframe.'''
@@ -190,11 +132,11 @@ def get_notes(domain, df1, df2):
     '''Diff metdata and write notes.'''
     print('Diffing metdata and write notes...')
     df_new, df_dep, common_keys = diff_rows(df1, df2)
-    df_mod = diff_cells(df1, df2, common_keys)
+    # df_mod = diff_cells(df1, df2, common_keys)
     new_notes = add_row_note(domain, df_new, ':gift: *New* dataset added:')
     dep_notes = add_row_note(domain, df_dep, ':boom: Dataset removed:')
-    mod_notes = add_cell_note(domain, df_mod, add_icon='*+* ', sub_icon='*-* ')
-    slack_note = [x for x in [new_notes, dep_notes, mod_notes] if x]
+    # mod_notes = add_cell_note(domain, df_mod, add_icon='*+* ', sub_icon='*-* ')
+    slack_note = [x for x in [new_notes, dep_notes] if x]  # , mod_notes
     slack_note = ' \n'.join(slack_note)
     twitter_note = ''  # TODO integrate twitter for new_notes
     if new_notes:

@@ -1,9 +1,10 @@
-# data-scout
+# wally
 
-A pre-alpha tool for diff'ing metadata from open data APIs and sending notifications:
-- new datasets added
-- dataset updates (row counts)
-- datasets removed
+![](http://s31.postimg.org/shsmoxv0r/wally.png)
+
+A pre-alpha tool to diff api results as well as:
+- serve diff results via an api
+- integrate notifications
 
 ## Integrations
 
@@ -29,3 +30,7 @@ Webhooks for each api are represented as separate yaml files in **apis/**.
     webhooks:
       - kind: slack
         url: "your-slack-webhook-url"
+
+### Attributions
+
+Image copyright 1997, Warner Bros.
