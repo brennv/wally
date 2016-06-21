@@ -1,0 +1,11 @@
+domain:
+name:
+locale:
+api:
+  kind:
+  version:
+  token: ""
+  hourlyLimit:
+webhooks:
+  - kind:
+    url: ""

@@ -1,3 +1,16 @@
+.DS_STORE
+*.retry
+gists/
+
+### web ###
+
+*.log
+node_modules
+dist
+coverage
+
+### api ###
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -61,12 +74,3 @@ docs/_build/
 
 # PyBuilder
 target/
-
-# Ipython Notebook
-.ipynb_checkpoints
-
-# gists
-gists/
-
-# data
-data.db
